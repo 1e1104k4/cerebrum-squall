@@ -11,13 +11,19 @@ struct ContentView: View {
     
     var movesChoice = ["rock", "paper", "scissors"]
     @State var currentMoveChoice = Int.random(in: 0...2)
+    @State var shouldWin = Bool.random()
     
     var body: some View {
         VStack {
-            
-            VStack {
-                Text(movesChoice[currentMoveChoice])
-                
+            HStack {
+                VStack {
+                    Text("game chose:")
+                    Text("you should:")
+                }
+                VStack {
+                    Text(movesChoice[currentMoveChoice])
+                    Text(shouldWin ? "win" : "lose")
+                }
             }
             
         }
