@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    var movesChoice = ["rock", "paper", "scissors"]
+    @State var currentMoveChoice = Int.random(in: 0...2)
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            
+            VStack {
+                Text(movesChoice[currentMoveChoice])
+                
+            }
+            
         }
         .padding()
     }
