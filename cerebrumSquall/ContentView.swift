@@ -10,8 +10,9 @@ import SwiftUI
 struct ContentView: View {
     
     let movesChoice = ["rock", "paper", "scissors"]
-    @State var computerMoveChoice = Int.random(in: 0..<3)
-    @State var shouldWin = Bool.random()
+    @State private var computerMoveChoice = Int.random(in: 0..<3)
+    @State private var shouldWin = Bool.random()
+    @State private var score = 0
 
     var body: some View {
         VStack {
@@ -25,7 +26,8 @@ struct ContentView: View {
                     Text(movesChoice[computerMoveChoice])
                     Text(shouldWin ? "win" : "lose")
                 }
-            }
+            }.padding()
+            
             HStack {
                 VStack {
                     Text("your chose:")
@@ -39,11 +41,17 @@ struct ContentView: View {
                         
                     }
                 }
-            }
+            }.padding()
             
-        }
-        .padding()
-        
+            HStack {
+                VStack {
+                    Text("score:")
+                }
+                VStack {
+                    Text("\(score)")
+                }
+            }.padding()
+        } // main VStack
         
     } // closing brase for body
     
@@ -55,6 +63,12 @@ struct ContentView: View {
             didWin = moveChoice == winningMovesChoice[computerMoveChoice]
         } else {
             didWin = winningMovesChoice[moveChoice] == computerMoveChoice
+        }
+        
+        if didWin {
+            score += 1
+        } else {
+            score -= 1
         }
         
     }
