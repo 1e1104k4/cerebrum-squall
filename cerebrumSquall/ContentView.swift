@@ -13,6 +13,9 @@ struct ContentView: View {
     @State private var computerMoveChoice = Int.random(in: 0..<3)
     @State private var shouldWin = Bool.random()
     @State private var score = 0
+    @State private var showingScore = false
+    @State private var scoreTitle = ""
+    @State private var round = 0
 
     var body: some View {
         VStack {
@@ -46,12 +49,25 @@ struct ContentView: View {
             HStack {
                 VStack {
                     Text("score:")
+                    Text("round:")
                 }
                 VStack {
                     Text("\(score)")
+                    Text("\(round)")
                 }
             }.padding()
         } // main VStack
+        .alert(scoreTitle, isPresented: $showingScore) {
+            Button("continue", action: nextRound)
+        } message: {
+            Text("""
+                round \(round)
+                your score is \(score)
+                """)
+        }
+    
+        // alert + new var
+        
         
     } // closing brase for body
     
@@ -67,10 +83,20 @@ struct ContentView: View {
         
         if didWin {
             score += 1
+            scoreTitle = "correct: +1"
         } else {
             score -= 1
+            scoreTitle = "wrong: -1"
         }
         
+        round += 1
+        showingScore = true
+        
+    }
+    
+    func nextRound() {
+        computerMoveChoice = Int.random(in: 0..<3)
+        shouldWin.toggle()
     }
     
 } // closing brase for struct
