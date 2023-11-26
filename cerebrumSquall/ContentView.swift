@@ -16,6 +16,8 @@ struct ContentView: View {
     @State private var showingScore = false
     @State private var scoreTitle = ""
     @State private var round = 0
+    @State private var gameOver = false
+    @State private var gameOverTitle = ""
 
     var body: some View {
         VStack {
@@ -53,7 +55,7 @@ struct ContentView: View {
                 }
                 VStack {
                     Text("\(score)")
-                    Text("\(round)")
+                    Text("\(round) / 10")
                 }
             }.padding()
         } // main VStack
@@ -65,8 +67,15 @@ struct ContentView: View {
                 your score is \(score)
                 """)
         }
+        .alert(gameOverTitle, isPresented: $gameOver) {
+            Button("new game", action: newGame)
+        } message: {
+            Text("""
+                your total score is \(score)
+                """)
+        }
     
-        // alert + new var
+        
         
         
     } // closing brase for body
@@ -92,11 +101,22 @@ struct ContentView: View {
         round += 1
         showingScore = true
         
+        if round == 10 {
+            gameOver = true
+            gameOverTitle = "game over"
+        }
+        
     }
     
     func nextRound() {
         computerMoveChoice = Int.random(in: 0..<3)
         shouldWin.toggle()
+    }
+    
+    func newGame() {
+        nextRound()
+        score = 0
+        round = 0
     }
     
 } // closing brase for struct
