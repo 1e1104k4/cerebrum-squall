@@ -20,64 +20,63 @@ struct ContentView: View {
     @State private var gameOverTitle = ""
 
     var body: some View {
-        VStack {
-            HStack {
+        ZStack {
+            LinearGradient(colors: [.init(red: 0.1, green: 0.2, blue: 0.3), .gray, .init(red: 0.1, green: 0.2, blue: 0.3) ], startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
+            VStack {
+                HStack {
+                    VStack {
+                        Text("game chose:")
+                        Text("you should:")
+                    }
+                    VStack {
+                        Text(movesChoice[computerMoveChoice])
+                        Text(shouldWin ? "win" : "lose")
+                    }
+                }.padding()
                 
-                VStack {
-                    Text("game chose:")
-                    Text("you should:")
-                }
-                VStack {
-                    Text(movesChoice[computerMoveChoice])
-                    Text(shouldWin ? "win" : "lose")
-                }
-            }.padding()
-            
-            HStack {
-                VStack {
-                    Text("your chose:")
-                }
-                VStack {
-                    ForEach(0..<3) { moveChoice in
-                        Button(movesChoice[moveChoice]) {
-                            userMove(is: moveChoice)
+                HStack {
+                    VStack {
+                        Text("your chose:")
+                    }
+                    VStack {
+                        ForEach(0..<3) { moveChoice in
+                            Button(movesChoice[moveChoice]) {
+                                userMove(is: moveChoice)
+                                
+                            }
                             
                         }
-                        
                     }
-                }
-            }.padding()
-            
-            HStack {
-                VStack {
-                    Text("score:")
-                    Text("round:")
-                }
-                VStack {
-                    Text("\(score)")
-                    Text("\(round) / 10")
-                }
-            }.padding()
-        } // main VStack
-        .alert(scoreTitle, isPresented: $showingScore) {
-            Button("continue", action: nextRound)
-        } message: {
-            Text("""
+                }.padding()
+                
+                HStack {
+                    VStack {
+                        Text("score:")
+                        Text("round:")
+                    }
+                    VStack {
+                        Text("\(score)")
+                        Text("\(round) / 10")
+                    }
+                }.padding()
+            } // main VStack
+            .alert(scoreTitle, isPresented: $showingScore) {
+                Button("continue", action: nextRound)
+            } message: {
+                Text("""
                 round \(round)
                 your score is \(score)
                 """)
-        }
-        .alert(gameOverTitle, isPresented: $gameOver) {
-            Button("new game", action: newGame)
-        } message: {
-            Text("""
+            }
+            .alert(gameOverTitle, isPresented: $gameOver) {
+                Button("new game", action: newGame)
+            } message: {
+                Text("""
                 your total score is \(score)
                 """)
-        }
-    
-        
-        
-        
+            }
+        } // ZStack
     } // closing brase for body
     
     func userMove(is moveChoice: Int) {
